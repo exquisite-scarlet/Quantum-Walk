@@ -25,7 +25,7 @@ gates = {'I':I,  'X':X, 'Y':Y, 'Z':Z, 'H':H, 'CNOT':CNOT, 'SWAP':SWAP}
 #N for Walking times
 N=60
 #picture lim for y
-lim=0.003
+lim=0.2
 #showing interval(ms)
 timess=100
 #definition about the searching targets and basis
