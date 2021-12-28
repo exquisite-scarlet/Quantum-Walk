@@ -108,6 +108,21 @@ def Walk(Quantum):
                     Coin[k][i]+=C[j][i]
     return [Coin,D,T]
 
+def Walk_2(Quantum):
+    C=Quantum[0]
+    D=Quantum[1]
+    T=Quantum[2]
+    Coin=[]
+    for sacred in C:
+        Coin.append([i*0 for i in sacred])
+    for j in range(len(C)):
+        for i in range(len(C[0])):
+            walk_state=exclusive(D[i],T[j])
+            for k in range(len(T)):
+                if T[k]==walk_state:
+                    Coin[k][len(C[0])-i-1]+=C[j][i]
+    return [Coin,D,T]
+
 def get_Prob(Quantum):
     Coin=Quantum[0]
     Prob=[]
@@ -135,10 +150,11 @@ def Two_Walk(Coin):
     New_coin=0*Coin
     for i in range(len(Coin)):
         for j in range(len(Coin[0])):
-            New_coin[i][j+1-L*(sgn(j+2-L))][0]=Coin[i][j][0]
-            New_coin[i][j-1+L*(sgn(1-j))][1]=Coin[i][j][1]
-            New_coin[i+1-L*(sgn(i+2-L))][j][2]=Coin[i][j][2]
-            New_coin[i-1+L*(sgn(1-i))][j][3]=Coin[i][j][3]
+            New_coin[i][j+1-L*(sgn(j+2-L))][0]=Coin[i][j][1]
+            New_coin[i][j-1+L*(sgn(1-j))][1]=Coin[i][j][0]
+            New_coin[i+1-L*(sgn(i+2-L))][j][2]=Coin[i][j][3]
+            New_coin[i-1+L*(sgn(1-i))][j][3]=Coin[i][j][2]
+            #after modified, it works
     return np.array(New_coin)
 
 def possible(Coin):
@@ -152,5 +168,7 @@ def possible(Coin):
                 #print(kkk,Prob[i][j])
                 Prob[i][j]=Prob[i][j]+kkk**2
     Prob=Prob/(sum(sum(Prob)))
-    Prob=(1/(L**2))-Prob
+
+    #Prob=(1/(L**2))-Prob
+    #注释后解除封锁
     return np.array(Prob)
